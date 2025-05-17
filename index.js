@@ -2,27 +2,26 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
-// Middleware para JSON antes de cualquier ruta
+// Middleware para JSON
 app.use(express.json());
 
 // Conectar a la base de datos
 const { connectBD } = require("./src/config/db");
 connectBD();
 
-// Registrar modelos
-require("./src/api/models/modelAutor");
-
-// Importar rutas
-const librosRoutes = require("./src/api/routes/routeLibro");
-const autoresRoutes = require("./src/api/routes/routeAutor");
+// Importar rutas de la tienda
+const userRoutes = require("./src/api/routes/routeUser");
+const productoRoutes = require("./src/api/routes/routeProducto");
+const pedidoRoutes = require("./src/api/routes/routePedido");
 
 // Usar rutas
-app.use("/libros", librosRoutes);
-app.use("/autores", autoresRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/productos", productoRoutes);
+app.use("/api/pedidos", pedidoRoutes);
 
 // Ruta de prueba
 app.get("/", (req, res) => {
-  res.send("Servidor funcionando");
+  res.send("Servidor funcionando 🛒");
 });
 
 // Ruta 404
@@ -31,6 +30,7 @@ app.use((req, res) => {
 });
 
 // Levantar servidor
-app.listen(3000, () => {
-  console.log("Servidor levantado en: http://localhost:3000 🎯");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor levantado en: http://localhost:${PORT} 🎯`);
 });
