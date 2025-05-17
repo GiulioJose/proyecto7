@@ -1,118 +1,145 @@
-# 📚 API REST - Biblioteca Online
+# 🛍️ Tienda de Productos Personalizados (Proyecto 7)
 
-Este proyecto es una API REST desarrollada con **Node.js**, **Express** y **MongoDB Atlas**. Permite gestionar una biblioteca de libros y autores con relaciones entre ellos.
-
----
-
-## 🚀 Tecnologías utilizadas
-
-* Node.js
-* Express
-* MongoDB Atlas
-* Mongoose
-* dotenv
-* nodemon
+Este proyecto es una API REST para una tienda de productos personalizados, desarrollada con Node.js, Express y MongoDB Atlas. Incluye autenticación con JWT, control de roles y relaciones entre usuarios, productos y pedidos.
 
 ---
 
-## 🌍 Conexión a la Base de Datos
+## 🔧 Instalación
 
-La conexión se realiza mediante un archivo `.env`:
+1. Clona el repositorio  
+2. Instala las dependencias:
 
-```
-DB_URL=mongodb+srv://user1:********@cluster0.bctvjs8.mongodb.net/libreria?retryWrites=true&w=majority&appName=Cluster0
+```bash
+npm install
 ```
 
-⚠️ Asegúrate de que la IP pública `0.0.0.0/0` esté habilitada en MongoDB Atlas.
+3. Crea un archivo `.env` con:
 
----
+```env
+DB_URL=mongodb+srv://<usuario>:<contraseña>@<cluster>.mongodb.net/tiendaDB
+JWT_SECRET=palabraSuperSecreta
+```
 
-## 🧪 Semilla (Seed)
-
-Este proyecto incluye un archivo `seed.js` que limpia la base de datos y carga autores y libros de prueba.
-
-Ejecutá el seed con:
+4. Inserta productos de ejemplo:
 
 ```bash
 node seed.js
 ```
 
+5. Levanta el servidor:
+
+```bash
+node index.js
+```
+
 ---
 
-## 📁 Estructura del proyecto
+## 🗂️ Estructura del proyecto
 
 ```
-proyecto/
+proyecto7/
 │
 ├── src/
 │   ├── api/
 │   │   ├── controller/
-│   │   │   ├── controllerLibros.js
-│   │   │   └── controllerAutor.js
+│   │   │   ├── controllerUsers.js
+│   │   │   ├── controllerProducto.js
+│   │   │   └── controllerPedido.js
 │   │   ├── models/
-│   │   │   ├── modelLibros.js
-│   │   │   └── modelAutor.js
-│   │   └── routes/
-│   │       ├── routeLibro.js
-│   │       └── routeAutor.js
-│   └── config/
-│       └── db.js
+│   │   │   ├── modelUser.js
+│   │   │   ├── modelProducto.js
+│   │   │   └── modelPedido.js
+│   │   ├── routes/
+│   │   │   ├── routeUsers.js
+│   │   │   ├── routeProducto.js
+│   │   │   └── routePedido.js
+│
+│   ├── middlewares/
+│   │   └── auth.js
+│
+│   ├── config/
+│   │   ├── db.js
+│   │   └── jwt.js
 │
 ├── .env
 ├── index.js
 ├── seed.js
-└── README.md
+├── package.json
+├── README.md
 ```
 
 ---
 
-## 📌 Funcionalidades principales
+## 🧩 Modelos
 
-* CRUD completo de **Libros**
-* CRUD completo de **Autores**
-* Relación entre modelos con `populate()`
-* Al eliminar un autor, se eliminan también sus libros
-* Evita duplicados en los arrays relacionados con `$addToSet`
-* Búsquedas personalizadas por género, idioma, año y autor
+- **User**  
+  - `userName`, `email`, `password`, `rol`  
+  - Relaciones: puede tener múltiples pedidos
 
----
+- **Producto**  
+  - `nombre`, `descripcion`, `precio`, `stock`, `imagen`, `categoría`
 
-## 📚 Endpoints disponibles
-
-### Libros (`/libros`)
-
-| Método | Ruta                     | Descripción                |
-| ------ | ------------------------ | -------------------------- |
-| GET    | `/libros`                | Obtener todos los libros   |
-| GET    | `/libros/:id`            | Obtener un libro por su ID |
-| POST   | `/libros`                | Crear un nuevo libro       |
-| PUT    | `/libros/:id`            | Actualizar un libro        |
-| DELETE | `/libros/:id`            | Eliminar un libro          |
-| GET    | `/libros/genero/:genero` | Buscar libros por género   |
-| GET    | `/libros/ano/:ano`       | Buscar libros por año      |
-| GET    | `/libros/autor/:autorId` | Buscar libros por autor    |
-| GET    | `/libros/idioma/:idioma` | Buscar libros por idioma   |
+- **Pedido**  
+  - `usuario` (ref a User)  
+  - `productos` (array de refs a Producto + cantidad)  
+  - `total`, `estado`
 
 ---
 
-### Autores (`/autores`)
+## 📡 Endpoints
 
-| Método | Ruta           | Descripción                    |
-| ------ | -------------- | ------------------------------ |
-| GET    | `/autores`     | Obtener todos los autores      |
-| GET    | `/autores/:id` | Obtener un autor por su ID     |
-| POST   | `/autores`     | Crear un nuevo autor           |
-| PUT    | `/autores/:id` | Actualizar un autor            |
-| DELETE | `/autores/:id` | Eliminar un autor y sus libros |
+### Auth y Usuarios
+
+| Método | Ruta                | Acceso | Descripción                        |
+|--------|---------------------|--------|------------------------------------|
+| POST   | /api/users/register | Público| Registro (rol user por defecto)   |
+| POST   | /api/users/login    | Público| Login y devuelve token            |
+| GET    | /api/users/profile  | User   | Ver perfil                        |
+| DELETE | /api/users/delete   | User   | Eliminar su propia cuenta         |
+| GET    | /api/users/         | Admin  | Ver todos los usuarios            |
+| DELETE | /api/users/:id      | Admin  | Eliminar un usuario               |
+| PUT    | /api/users/role/:id | Admin  | Cambiar rol de un usuario         |
 
 ---
 
-## 🔗 Repositorio
+### Productos
 
-🔓 [Enlace al repositorio público en GitHub](https://github.com/GiulioJose/proyecto6.git)
+| Método | Ruta                  | Acceso  | Descripción             |
+|--------|-----------------------|---------|-------------------------|
+| GET    | /api/productos        | Público | Ver todos los productos |
+| GET    | /api/productos/:id    | Público | Ver un producto         |
+| POST   | /api/productos        | Admin   | Crear producto          |
+| PUT    | /api/productos/:id    | Admin   | Actualizar producto     |
+| DELETE | /api/productos/:id    | Admin   | Eliminar producto       |
+
+---
+
+### Pedidos
+
+| Método | Ruta                 | Acceso | Descripción             |
+|--------|----------------------|--------|-------------------------|
+| POST   | /api/pedidos         | User   | Crear un nuevo pedido   |
+| GET    | /api/pedidos/mios    | User   | Ver mis pedidos         |
+| GET    | /api/pedidos         | Admin  | Ver todos los pedidos   |
+
+---
+
+## 🔒 Roles y permisos
+
+- Usuarios se crean con rol `user` por defecto  
+- Un `admin` puede cambiar el rol de otros  
+- `isAuth` y `isAdmin` son middlewares que protegen las rutas
+
+El primer admin se debe crear manualmente desde la base de datos.
 
 ---
 
 ## 👤 Autor
 
-\*\*Giulio José Spaziani \*\*
+Giulio Spaziani
+
+---
+
+## 📝 Licencia
+
+MIT

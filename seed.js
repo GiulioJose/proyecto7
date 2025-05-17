@@ -1,70 +1,45 @@
-const mongoose = require("mongoose");
 require("dotenv").config();
-
-const Autor = require("./src/api/models/modelAutor");
-const Libro = require("./src/api/models/modelLibros");
+const mongoose = require("mongoose");
 const { connectBD } = require("./src/config/db");
+const Producto = require("./src/api/models/modelProducto");
 
-const runSeed = async () => {
+const productos = [
+  {
+    nombre: "Camiseta personalizada",
+    descripcion: "Camiseta 100% algodón con diseño personalizado",
+    precio: 19.99,
+    stock: 50,
+    imagen: "https://example.com/camiseta.jpg",
+    categoria: "Camisetas"
+  },
+  {
+    nombre: "Taza mágica",
+    descripcion: "Taza que cambia de color con líquido caliente",
+    precio: 12.5,
+    stock: 30,
+    imagen: "https://example.com/taza.jpg",
+    categoria: "Tazas"
+  },
+  {
+    nombre: "Poster A3 con marco",
+    descripcion: "Poster decorativo con marco negro",
+    precio: 24.0,
+    stock: 20,
+    imagen: "https://example.com/poster.jpg",
+    categoria: "Posters"
+  }
+];
+
+const seed = async () => {
   try {
     await connectBD();
-
-    // 1. Limpiar base de datos
-    await Autor.deleteMany();
-    await Libro.deleteMany();
-
-    // 2. Crear autores
-    const autores = await Autor.insertMany([
-      {
-        nombre: "Gabriel",
-        apellido: "García Márquez",
-        pais: "Colombia"
-      },
-      {
-        nombre: "Isabel",
-        apellido: "Allende",
-        pais: "Chile"
-      }
-    ]);
-
-    // 3. Crear libros vinculados a esos autores
-    const libros = await Libro.insertMany([
-      {
-        nombre: "Cien años de soledad",
-        ano: 1967,
-        idiomas: ["Español", "Inglés"],
-        genero: "Fantasía",
-        autor: autores[0]._id
-      },
-      {
-        nombre: "El amor en los tiempos del cólera",
-        ano: 1985,
-        idiomas: ["Español"],
-        genero: "Romance",
-        autor: autores[0]._id
-      },
-      {
-        nombre: "La casa de los espíritus",
-        ano: 1982,
-        idiomas: ["Español", "Francés"],
-        genero: "Drama",
-        autor: autores[1]._id
-      }
-    ]);
-
-    // 4. Asociar libros a los autores
-    for (const libro of libros) {
-      await Autor.findByIdAndUpdate(libro.autor, {
-        $addToSet: { libros: libro._id }
-      });
-    }
-
-    console.log("✅ Seed ejecutado correctamente");
+    await Producto.deleteMany(); // Borra productos existentes
+    await Producto.insertMany(productos);
+    console.log("✅ Productos insertados correctamente");
     mongoose.disconnect();
   } catch (error) {
-    console.error("❌ Error al ejecutar el seed:", error.message);
-    mongoose.disconnect();
+    console.error("❌ Error en la semilla:", error);
   }
 };
 
-runSeed();
+seed();
