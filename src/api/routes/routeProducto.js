@@ -9,7 +9,7 @@ const {
   deleteProducto
 } = require("../controller/controllerProducto");
 
-const { isAuth, isAdmin } = require("../../middleware/auth");
+const { isAuth, isAdmin } = require("../../middlewares/auth");
 
 // Público
 router.get("/", getAllProductos);

@@ -7,15 +7,15 @@ const {
   getAllPedidos
 } = require("../controller/controllerPedido");
 
-const { verifyToken, isAdmin } = require("../middleware/auth");
+const { isAuth, isAdmin } = require("../../middlewares/auth");
 
 // Usuario: crear pedido
-router.post("/", verifyToken, createPedido);
+router.post("/", isAuth, createPedido);
 
 // Usuario: ver sus propios pedidos
-router.get("/mios", verifyToken, getMisPedidos);
+router.get("/mios", isAuth, getMisPedidos);
 
 // Admin: ver todos los pedidos
-router.get("/", verifyToken, isAdmin, getAllPedidos);
+router.get("/", isAuth, isAdmin, getAllPedidos);
 
 module.exports = router;

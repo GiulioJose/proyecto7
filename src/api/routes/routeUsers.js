@@ -9,21 +9,21 @@ const {
   getAllUsers,
   deleteUserById,
   updateUserRole
-} = require("../controller/controllerUser");
+} = require("../controller/controllerUsers");
 
-const { verifyToken, isAdmin } = require("../middleware/auth");
+const { isAuth, isAdmin } = require("../../middlewares/auth");
 
 // Rutas públicas
 router.post("/register", register);
 router.post("/login", login);
 
 // Rutas protegidas para usuarios
-router.get("/profile", verifyToken, getProfile);
-router.delete("/delete", verifyToken, deleteOwnAccount);
+router.get("/profile", isAuth, getProfile);
+router.delete("/delete", isAuth, deleteOwnAccount);
 
 // Rutas solo para admin
-router.get("/", verifyToken, isAdmin, getAllUsers);
-router.delete("/:id", verifyToken, isAdmin, deleteUserById);
-router.put("/role/:id", verifyToken, isAdmin, updateUserRole);
+router.get("/", isAuth, isAdmin, getAllUsers);
+router.delete("/:id", isAuth, isAdmin, deleteUserById);
+router.put("/role/:id", isAuth, isAdmin, updateUserRole);
 
 module.exports = router;

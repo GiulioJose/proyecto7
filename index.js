@@ -1,16 +1,20 @@
 require("dotenv").config();
 const express = require("express");
+const path = require("path"); // 👈 Aquí se importa path
 const app = express();
 
 // Middleware para JSON
 app.use(express.json());
+
+// Middleware para servir archivos estáticos desde /public
+app.use(express.static(path.join(__dirname, "public"))); // 👈 Aquí se usa
 
 // Conectar a la base de datos
 const { connectBD } = require("./src/config/db");
 connectBD();
 
 // Importar rutas de la tienda
-const userRoutes = require("./src/api/routes/routeUser");
+const userRoutes = require("./src/api/routes/routeUsers");
 const productoRoutes = require("./src/api/routes/routeProducto");
 const pedidoRoutes = require("./src/api/routes/routePedido");
 
