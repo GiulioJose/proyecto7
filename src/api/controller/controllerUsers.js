@@ -41,8 +41,10 @@ const login = async (req, res) => {
     const token = generateToken(user);
     res.status(200).json({ token, user: { id: user._id, userName: user.userName, rol: user.rol } });
   } catch (error) {
-    res.status(500).json({ message: "Error en el login", error });
+    console.error("Error en login:", error);
+    res.status(500).json({ message: "Error en el login", error: error.message });
   }
+  
 };
 
 // Ver perfil propio
