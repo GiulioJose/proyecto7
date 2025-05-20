@@ -17,7 +17,7 @@ npm install
 
 ```env
 DB_URL=mongodb+srv://<usuario>:<contraseña>@<cluster>.mongodb.net/tiendaDB
-JWT_SECRET=palabraSuperSecreta
+JWT_SECRET=proyecto7SecretKey_XYZ
 ```
 
 4. Inserta productos de ejemplo:
@@ -39,33 +39,35 @@ node index.js
 ```
 proyecto7/
 │
+├── index.js
+├── seed.js
+├── .env
+├── package.json
+├── README.md
+│
 ├── src/
-│   ├── api/
-│   │   ├── controller/
-│   │   │   ├── controllerUsers.js
-│   │   │   ├── controllerProducto.js
-│   │   │   └── controllerPedido.js
-│   │   ├── models/
-│   │   │   ├── modelUser.js
-│   │   │   ├── modelProducto.js
-│   │   │   └── modelPedido.js
-│   │   ├── routes/
-│   │   │   ├── routeUsers.js
-│   │   │   ├── routeProducto.js
-│   │   │   └── routePedido.js
-│
-│   ├── middlewares/
-│   │   └── auth.js
-│
 │   ├── config/
 │   │   ├── db.js
 │   │   └── jwt.js
-│
-├── .env
-├── index.js
-├── seed.js
-├── package.json
-├── README.md
+│   │
+│   ├── middlewares/
+│   │   └── auth.js
+│   │
+│   └── api/
+│       ├── models/
+│       │   ├── modelUser.js
+│       │   ├── modelProducto.js
+│       │   └── modelPedido.js
+│       │
+│       ├── controller/
+│       │   ├── controllerUsers.js
+│       │   ├── controllerProducto.js
+│       │   └── controllerPedido.js
+│       │
+│       └── routes/
+│           ├── routeUsers.js
+│           ├── routeProducto.js
+│           └── routePedido.js
 ```
 
 ---
@@ -86,51 +88,64 @@ proyecto7/
 
 ---
 
-## 📡 Endpoints
+## 📡 Endpoints principales
 
-### Auth y Usuarios
+### 🔐 Auth y Usuarios
 
-| Método | Ruta                | Acceso | Descripción                        |
-|--------|---------------------|--------|------------------------------------|
-| POST   | /api/users/register | Público| Registro (rol user por defecto)   |
-| POST   | /api/users/login    | Público| Login y devuelve token            |
-| GET    | /api/users/profile  | User   | Ver perfil                        |
-| DELETE | /api/users/delete   | User   | Eliminar su propia cuenta         |
-| GET    | /api/users/         | Admin  | Ver todos los usuarios            |
-| DELETE | /api/users/:id      | Admin  | Eliminar un usuario               |
-| PUT    | /api/users/role/:id | Admin  | Cambiar rol de un usuario         |
+| Método | Ruta                | Acceso  | Descripción                           |
+|--------|---------------------|---------|---------------------------------------|
+| POST   | /api/users/register | Público | Registro de usuarios (rol = user)     |
+| POST   | /api/users/login    | Público | Login y devuelve token JWT            |
+| GET    | /api/users/profile  | User    | Ver perfil propio                     |
+| DELETE | /api/users/delete   | User    | Eliminar su propia cuenta             |
+| GET    | /api/users/         | Admin   | Ver todos los usuarios                |
+| PUT    | /api/users/role/:id | Admin   | Cambiar rol de un usuario             |
+| DELETE | /api/users/:id      | Admin   | Eliminar otro usuario                 |
 
----
+### 🛍️ Productos
 
-### Productos
+| Método | Ruta               | Acceso  | Descripción                           |
+|--------|--------------------|---------|---------------------------------------|
+| GET    | /api/productos     | Público | Ver todos los productos               |
+| POST   | /api/productos     | Admin   | Crear nuevo producto                  |
+| PUT    | /api/productos/:id | Admin   | Actualizar producto                   |
+| DELETE | /api/productos/:id | Admin   | Eliminar producto                     |
 
-| Método | Ruta                  | Acceso  | Descripción             |
-|--------|-----------------------|---------|-------------------------|
-| GET    | /api/productos        | Público | Ver todos los productos |
-| GET    | /api/productos/:id    | Público | Ver un producto         |
-| POST   | /api/productos        | Admin   | Crear producto          |
-| PUT    | /api/productos/:id    | Admin   | Actualizar producto     |
-| DELETE | /api/productos/:id    | Admin   | Eliminar producto       |
+### 📦 Pedidos
 
----
-
-### Pedidos
-
-| Método | Ruta                 | Acceso | Descripción             |
-|--------|----------------------|--------|-------------------------|
-| POST   | /api/pedidos         | User   | Crear un nuevo pedido   |
-| GET    | /api/pedidos/mios    | User   | Ver mis pedidos         |
-| GET    | /api/pedidos         | Admin  | Ver todos los pedidos   |
+| Método | Ruta                 | Acceso | Descripción                           |
+|--------|----------------------|--------|---------------------------------------|
+| POST   | /api/pedidos         | User   | Crear un nuevo pedido                 |
+| GET    | /api/pedidos/mios    | User   | Ver los pedidos del usuario logueado |
+| GET    | /api/pedidos         | Admin  | Ver todos los pedidos                 |
 
 ---
 
-## 🔒 Roles y permisos
+## 🔒 Roles y seguridad
 
-- Usuarios se crean con rol `user` por defecto  
-- Un `admin` puede cambiar el rol de otros  
-- `isAuth` y `isAdmin` son middlewares que protegen las rutas
+- Los usuarios se registran siempre con rol `user`
+- Solo un `admin` (creado manualmente) puede:
+  - Ver todos los usuarios
+  - Cambiar roles
+  - Eliminar usuarios
+- Middleware `isAuth` protege rutas privadas
+- Middleware `isAdmin` restringe rutas a admin
 
-El primer admin se debe crear manualmente desde la base de datos.
+---
+
+## 🔗 Repositorio
+
+[🔗 GitHub: GiulioJose/proyecto7](https://github.com/GiulioJose/proyecto7)
+
+---
+
+## 📸 Capturas (opcional)
+
+Puedes añadir capturas aquí si tienes frontend:
+
+```md
+![Vista de productos](./capturas/productos.png)
+```
 
 ---
 
