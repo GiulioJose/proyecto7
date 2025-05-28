@@ -5,7 +5,7 @@ const {
   createPedido,
   getMisPedidos,
   getAllPedidos
-} = require("../controller/controllerPedido");
+} = require("../controller/pedido.controller");
 
 const { isAuth, isAdmin } = require("../../middlewares/auth");
 

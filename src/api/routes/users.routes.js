@@ -1,21 +1,22 @@
 const express = require("express");
 const router = express.Router();
 
+// ✅ Importamos los controladores con sus nombres reales
 const {
-  register,
-  login,
+  registerUser,
+  loginUser,
   getProfile,
   deleteOwnAccount,
   getAllUsers,
   deleteUserById,
   updateUserRole
-} = require("../controller/controllerUsers");
+} = require("../controller/user.controller");
 
 const { isAuth, isAdmin } = require("../../middlewares/auth");
 
 // Rutas públicas
-router.post("/register", register);
-router.post("/login", login);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
 
 // Rutas protegidas para usuarios
 router.get("/profile", isAuth, getProfile);

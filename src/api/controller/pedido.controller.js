@@ -1,5 +1,5 @@
-const Pedido = require("../models/modelPedido");
-const Producto = require("../models/modelProducto");
+const Pedido = require("../models/pedido.model");
+const Producto = require("../models/producto.model");
 
 // Crear pedido (usuario)
 const createPedido = async (req, res) => {
