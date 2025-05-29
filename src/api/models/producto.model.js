@@ -6,13 +6,13 @@ const productoSchema = new mongoose.Schema(
     descripcion: { type: String },
     precio: { type: Number, required: true },
     stock: { type: Number, required: true },
-    imagen: { type: String }, // URL de imagen opcional
+    imagen: { type: String }, // URL de imagen
     categoria: {
       type: String,
       required: true,
       enum: [
         "Camisetas", "Tazas", "Posters", "Pegatinas", "Libretas",
-        "Tecnología", "Hogar", "Accesorios", "Otros"
+        "Tecnología", "Hogar", "Accesorios", "Ropa", "Papeleria", "Otros"
       ]
     }
   },

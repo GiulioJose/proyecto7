@@ -12,8 +12,7 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: "El usuario ya existe" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ ...req.body, password: hashedPassword, rol: "user" });
+    const newUser = new User({ ...req.body, password, rol: "user" });
     await newUser.save();
 
     res.status(201).json({ message: "Usuario registrado correctamente" });
@@ -35,7 +34,11 @@ const loginUser = async (req, res) => {
 
     const token = generateToken(user);
 
-    res.status(200).json({ message: "Login exitoso", token, user });
+    res.status(200).json({
+      message: "Login exitoso",
+      token,
+      user,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -62,7 +65,7 @@ const deleteOwnAccount = async (req, res) => {
 // ✅ Obtener todos los usuarios (admin)
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password"); // excluye contraseñas
+    const users = await User.find().select("-password");
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });

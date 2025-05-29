@@ -20,7 +20,7 @@ DB_URL=mongodb+srv://<usuario>:<contraseña>@<cluster>.mongodb.net/tiendaDB
 JWT_SECRET=proyecto7SecretKey_XYZ
 ```
 
-4. Inserta productos de ejemplo:
+4. Inserta productos y usuarios de ejemplo:
 
 ```bash
 node seed.js
@@ -42,6 +42,7 @@ proyecto7/
 ├── index.js
 ├── seed.js
 ├── .env
+├── .gitignore
 ├── package.json
 ├── README.md
 │
@@ -55,19 +56,19 @@ proyecto7/
 │   │
 │   └── api/
 │       ├── models/
-│       │   ├── modelUser.js
-│       │   ├── modelProducto.js
-│       │   └── modelPedido.js
+│       │   ├── user.model.js
+│       │   ├── producto.model.js
+│       │   └── pedido.model.js
 │       │
 │       ├── controller/
-│       │   ├── controllerUsers.js
-│       │   ├── controllerProducto.js
-│       │   └── controllerPedido.js
+│       │   ├── user.controller.js
+│       │   ├── producto.controller.js
+│       │   └── pedido.controller.js
 │       │
 │       └── routes/
-│           ├── routeUsers.js
-│           ├── routeProducto.js
-│           └── routePedido.js
+│           ├── user.routes.js
+│           ├── producto.routes.js
+│           └── pedido.routes.js
 ```
 
 ---
@@ -79,7 +80,7 @@ proyecto7/
   - Relaciones: puede tener múltiples pedidos
 
 - **Producto**  
-  - `nombre`, `descripcion`, `precio`, `stock`, `imagen`, `categoría`
+  - `nombre`, `descripcion`, `precio`, `stock`, `imagen`, `categoria`
 
 - **Pedido**  
   - `usuario` (ref a User)  
@@ -124,12 +125,23 @@ proyecto7/
 ## 🔒 Roles y seguridad
 
 - Los usuarios se registran siempre con rol `user`
-- Solo un `admin` (creado manualmente) puede:
+- Solo un `admin` (creado manualmente en el seed) puede:
   - Ver todos los usuarios
   - Cambiar roles
   - Eliminar usuarios
 - Middleware `isAuth` protege rutas privadas
 - Middleware `isAdmin` restringe rutas a admin
+
+---
+
+## 👥 Usuarios de prueba (seed)
+
+| Nombre  | Email              | Contraseña |
+|---------|--------------------|------------|
+| admin   | admin@example.com  | 123456     |
+| Carlos  | carlos@example.com | 123456     |
+| Laura   | laura@example.com  | 123456     |
+| Elena   | elena@example.com  | 123456     |
 
 ---
 
@@ -139,22 +151,9 @@ proyecto7/
 
 ---
 
-## 📸 Capturas (opcional)
-
-Puedes añadir capturas aquí si tienes frontend:
-
-```md
-![Vista de productos](./capturas/productos.png)
-```
-
----
 
 ## 👤 Autor
 
 Giulio Spaziani
 
 ---
-
-## 📝 Licencia
-
-MIT
