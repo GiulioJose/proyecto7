@@ -29,13 +29,56 @@ node index.js
 
 ## 🗂️ Estructura del proyecto
 
-(proyecto7 con src, models, routes, controller…)
+```
+proyecto7/
+│
+├── index.js
+├── seed.js
+├── .env
+├── .gitignore
+├── package.json
+├── README.md
+│
+├── src/
+│   ├── config/
+│   │   ├── db.js
+│   │   └── jwt.js
+│   │
+│   ├── middlewares/
+│   │   └── auth.js
+│   │
+│   └── api/
+│       ├── models/
+│       │   ├── user.model.js
+│       │   ├── producto.model.js
+│       │   └── pedido.model.js
+│       │
+│       ├── controller/
+│       │   ├── user.controller.js
+│       │   ├── producto.controller.js
+│       │   └── pedido.controller.js
+│       │
+│       └── routes/
+│           ├── user.routes.js
+│           ├── producto.routes.js
+│           └── pedido.routes.js
+```
 
 ---
 
 ## 🧩 Modelos
 
-(User, Producto, Pedido…)
+- **User**  
+  - `userName`, `email`, `password`, `rol`  
+  - Relaciones: puede tener múltiples pedidos
+
+- **Producto**  
+  - `nombre`, `descripcion`, `precio`, `stock`, `imagen`, `categoria`
+
+- **Pedido**  
+  - `usuario` (ref a User)  
+  - `productos` (array de objetos: producto + cantidad)  
+  - `total`, `estado` (opcional)
 
 ---
 
@@ -48,7 +91,7 @@ node index.js
 | POST   | /api/users/register         | Público    | Registro de usuarios (rol = user)               |
 | POST   | /api/users/login            | Público    | Login y devuelve token JWT                      |
 | GET    | /api/users/profile          | User       | Ver perfil propio (por token)                   |
-| GET    | /api/users/profile/:id      | Admin/User | Ver cualquier perfil (admin) o el propio        |
+| GET    | /api/users/profile/:id      | Admin      | Ver perfil por ID                               |
 | PUT    | /api/users/edit             | User       | Editar nombre o email del perfil propio         |
 | DELETE | /api/users/delete           | User       | Eliminar su propia cuenta                       |
 | GET    | /api/users/                 | Admin      | Ver todos los usuarios                          |
@@ -80,15 +123,15 @@ node index.js
 
 ## 🔒 Roles y seguridad
 
-- Los usuarios se registran siempre con rol user
+- Los usuarios se registran siempre con rol `user`
 - Solo un admin (creado manualmente en el seed) puede:
   - Ver todos los usuarios
   - Cambiar roles
   - Eliminar usuarios
   - Crear, editar y eliminar productos
   - Ver y modificar cualquier pedido
-- Middleware isAuth protege rutas privadas
-- Middleware isAdmin restringe rutas a admin
+- Middleware `isAuth` protege rutas privadas
+- Middleware `isAdmin` restringe rutas a admin
 
 ---
 
