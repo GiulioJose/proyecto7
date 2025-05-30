@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-// ✅ Importamos los controladores con sus nombres reales
+// ✅ Importamos los controladores
 const {
   registerUser,
   loginUser,
   getProfile,
+  getProfileById,
+  editOwnProfile,
   deleteOwnAccount,
   getAllUsers,
   deleteUserById,
@@ -19,7 +21,9 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 // Rutas protegidas para usuarios
-router.get("/profile", isAuth, getProfile);
+router.get("/profile", isAuth, getProfile); // Perfil propio (token)
+router.get("/profile/:id", isAuth, getProfileById); // Perfil propio o admin
+router.put("/edit", isAuth, editOwnProfile); // Editar perfil propio
 router.delete("/delete", isAuth, deleteOwnAccount);
 
 // Rutas solo para admin

@@ -52,6 +52,42 @@ const getProfile = (req, res) => {
   });
 };
 
+// ✅ Obtener perfil por ID (admin o dueño)
+const getProfileById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!req.user.admin && req.user.id !== id) {
+      return res.status(403).json({ message: "No tienes permiso para ver este perfil" });
+    }
+
+    const user = await User.findById(id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// ✅ Editar perfil propio (excepto rol y contraseña)
+const editOwnProfile = async (req, res) => {
+  try {
+    const updates = { ...req.body };
+    delete updates.rol;
+    delete updates.password;
+
+    const updatedUser = await User.findByIdAndUpdate(req.user.id, updates, { new: true }).select("-password");
+
+    res.status(200).json({ message: "Perfil actualizado", user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // ✅ Eliminar la propia cuenta
 const deleteOwnAccount = async (req, res) => {
   try {
@@ -97,6 +133,8 @@ module.exports = {
   registerUser,
   loginUser,
   getProfile,
+  getProfileById,
+  editOwnProfile,
   deleteOwnAccount,
   getAllUsers,
   deleteUserById,

@@ -11,7 +11,7 @@ const productos = [
     descripcion: "Camiseta 100% algodón con diseño personalizado",
     precio: 19.99,
     stock: 50,
-    imagen: "https://www.crealo.es/1160697-medium_default/camiseta-la-mas-barata-personalizada-urgente.jpg",
+    imagen: "https://res.cloudinary.com/dofudcbej/image/upload/v1748594107/camisetaPersonalizada_izc8r1.png",
     categoria: "Camisetas"
   },
   {
@@ -19,23 +19,23 @@ const productos = [
     descripcion: "Taza que cambia de color con líquido caliente",
     precio: 12.5,
     stock: 30,
-    imagen: "https://e7.pngegg.com/pngimages/659/518/png-clipart-magic-mug-shiva-sandhya-designer-studio-coffee-cup-coupon-magic-mug-magic-advertising-thumbnail.png",
+    imagen: "https://res.cloudinary.com/dofudcbej/image/upload/v1748594417/proyecto7/tazaMagica_bq3z9f.png",
     categoria: "Tazas"
   },
   {
-    nombre: "Poster A3 con marco",
-    descripcion: "Poster decorativo con marco negro",
-    precio: 24.0,
+    nombre: "Smartwatch",
+    descripcion: "Nuevo Smartwatch con muchas apps preinstaladas",
+    precio: 85.0,
     stock: 20,
-    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzToM9-9QkUsXVtXvX0WGZeO500R9bCS5VJw&s",
+    imagen: "https://res.cloudinary.com/dofudcbej/image/upload/v1748594406/proyecto7/smartWatch_hmcie1.png",
     categoria: "Posters"
   },
   {
-    nombre: "Pegatina divertida",
+    nombre: "Pegatina",
     descripcion: "Pegatina resistente al agua y sol",
     precio: 3.99,
     stock: 100,
-    imagen: "https://cdn-icons-png.flaticon.com/512/1057/1057196.png",
+    imagen: "https://res.cloudinary.com/dofudcbej/image/upload/v1748594427/proyecto7/pegatina_bawcej.png",
     categoria: "Pegatinas"
   },
   {
@@ -43,7 +43,7 @@ const productos = [
     descripcion: "Libreta con tapa dura y diseño único",
     precio: 9.5,
     stock: 40,
-    imagen: "https://www.printsome.com/blog/wp-content/uploads/2020/03/custom-notebook.jpg",
+    imagen: "https://res.cloudinary.com/dofudcbej/image/upload/v1748594887/proyecto7/libretas_tv5whs.png",
     categoria: "Libretas"
   },
   {
@@ -51,7 +51,7 @@ const productos = [
     descripcion: "Funda con diseño impreso a medida",
     precio: 15.0,
     stock: 60,
-    imagen: "https://cdn.pixabay.com/photo/2018/01/20/07/38/phone-3097447_960_720.jpg",
+    imagen: "https://res.cloudinary.com/dofudcbej/image/upload/v1748594884/proyecto7/funda_abinzo.png",
     categoria: "Tecnología"
   },
   {
@@ -59,7 +59,7 @@ const productos = [
     descripcion: "Cojín suave con estampado personalizado",
     precio: 18.0,
     stock: 25,
-    imagen: "https://m.media-amazon.com/images/I/71vSRVNTeHL._AC_SL1500_.jpg",
+    imagen: "https://res.cloudinary.com/dofudcbej/image/upload/v1748594884/proyecto7/cojin_kckwes.png",
     categoria: "Hogar"
   },
   {
@@ -67,7 +67,7 @@ const productos = [
     descripcion: "Llaveros metálicos con forma personalizada",
     precio: 6.5,
     stock: 80,
-    imagen: "https://www.marti.mx/cdn/shop/products/1188320319_1_efb80051-1616-41d1-866b-04d07dc169e2.jpg",
+    imagen: "https://res.cloudinary.com/dofudcbej/image/upload/v1748594885/proyecto7/llaveros_mnttvo.png",
     categoria: "Accesorios"
   },
   {
@@ -75,7 +75,7 @@ const productos = [
     descripcion: "Sudadera con diseño gráfico exclusivo",
     precio: 35.0,
     stock: 15,
-    imagen: "https://static.pullandbear.net/2/photos//2023/I/0/2/p/1390/410/712/1390410712_1_1_3.jpg",
+    imagen: "https://res.cloudinary.com/dofudcbej/image/upload/v1748594884/proyecto7/sudadera_vddva5.png",
     categoria: "Ropa"
   },
   {
@@ -83,7 +83,7 @@ const productos = [
     descripcion: "Set con bolígrafos, lápices y bloc de notas",
     precio: 11.0,
     stock: 35,
-    imagen: "https://m.media-amazon.com/images/I/81McnLFOqxL._AC_SL1500_.jpg",
+    imagen: "https://res.cloudinary.com/dofudcbej/image/upload/v1748594886/proyecto7/setDePapeleria_svr7gx.png",
     categoria: "Papeleria"
   }
 ];
